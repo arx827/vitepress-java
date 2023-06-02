@@ -3,7 +3,7 @@ import { defineConfig } from "vitepress";
 import { head, nav, sidebar } from './configs'
 
 export default defineConfig({
-  // base: '/base/',   // 站點將部署在這個 base URL路徑
+  base: '/vitepress-java/',   // 站點將部署在這個 base URL路徑
   title: 'Java 程式設計',
   description: '閱讀筆記',
   themeConfig: {
