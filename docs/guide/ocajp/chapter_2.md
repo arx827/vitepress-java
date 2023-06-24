@@ -76,5 +76,38 @@ title: 2. Java程式語法簡介
   </table>
 
 ## 2.4 Java 整合開發工具 (IDE) 介紹
-  ### 2.4.1 下載 Eclipse 作為開發工具
-  ### 2.4.2 建立 Eclipse 專案，並開發、執行 Java 程式
+  比較常見的開發工具有：
+  - 1. Oracle 公司的 `NetBeans IDE`
+  - 2. Oracle 公司的 `JDeveloper`
+  - 3. IBM 公司的` Eclipse`
+
+  - ### 2.4.1 下載 Eclipse 作為開發工具
+    [下載 Eclipse](http://www.eclipse.org/downloads/)
+
+    可以選擇要下載「 `Java EE Developers 版` 」或是「 `Java Developers 版` 」的工具。後者指的就是「 `Java SE Developers 版` 」。
+    「 `Java EE Developers 版` 」好處是支援 `Java EE 規格`，所以可以開發如網站等 EE 範圍的 `Java` 程式；壞處是比較佔空間。
+
+    下載完成後，可移動到欲放置的空間，Eclipse 的特色之一就是不用安裝，直接點擊 eclipse.exe 即可開始使用。
+
+  - ### 2.4.2 建立 Eclipse 專案，並開發、執行 Java 程式
+    - #### step 01
+      輸入 `工作空間 (Workspace)`。
+      顧名思義，接下來所有在 Eclipse 裡生成的專案或是程式檔案，都會放置在該路徑下。
+
+    - #### step 02
+      首次使用會出現 `歡迎(Welcome)` 畫面，點選左上角「 X 」按鍵，關閉該畫面。
+    
+    - #### step 03
+      在左側空白的「 `Project Explorer` 」處，點選滑鼠右鍵，選擇「 `New` 」，再選擇「 `Java Project` 」，建立新專案。
+
+    - #### step 04
+      輸入 `專案名稱 (Project Name)`，並選擇合適的 `JRE 版本`。 如：jdk 1.8.0_45
+
+    - #### step 05
+      專案建立完成後，左側的「 `Project Explorer` 」內，將出現 `剛剛建立的專案名稱`，點選該專案，點擊滑鼠右鍵，選擇「 `New` 」，再選擇「 `Class` 」，建立新類別。
+
+    - #### step 06
+      在彈出的「 `New Java Class` 」視窗裡，輸入 `類別 (class) 名稱`，這裡用「 HelloWorld 」，再勾選「 `public static void main(String[] arg)` 」的核取方格。
+
+    - #### step 07
+      
