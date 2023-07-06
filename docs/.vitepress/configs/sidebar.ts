@@ -36,7 +36,7 @@ export const sidebar = {
         { text: '9. String字串', link: '/guide/edu/chapter_9' },
         { text: '10. 陣列', link: '/guide/edu/chapter_10' },
         { text: '11. 方法', link: '/guide/edu/chapter_11' },
-        { text: '12. Pass By Value', link: '/guide/edu/chapter_12' },
+        { text: '12. Pass By Value Or by Reference', link: '/guide/edu/chapter_12' },
         { text: '13. 封裝', link: '/guide/edu/chapter_13' },
         { text: '14. 建構方法 Constructor', link: '/guide/edu/chapter_14' },
         { text: '15. 繼承', link: '/guide/edu/chapter_15' },
