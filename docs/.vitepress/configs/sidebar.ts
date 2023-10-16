@@ -43,7 +43,7 @@ export const sidebar = {
         { text: '16. 修飾子', link: '/guide/edu/chapter_16' },
         { text: '17. 多型', link: '/guide/edu/chapter_17' },
         { text: '18. 介面', link: '/guide/edu/chapter_18' },
-        { text: '19. 匿名類別', link: '/guide/edu/chapter_19' },
+        { text: '19. 匿名類別 (內部類別)', link: '/guide/edu/chapter_19' },
         { text: '20. Object類別', link: '/guide/edu/chapter_20' },
         { text: '21. 例外處理', link: '/guide/edu/chapter_21' },
         { text: '22. 集合 Collection', link: '/guide/edu/chapter_22' },

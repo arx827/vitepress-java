@@ -107,7 +107,7 @@ title: 2. Java程式語法簡介
       專案建立完成後，左側的「 `Project Explorer` 」內，將出現 `剛剛建立的專案名稱`，點選該專案，點擊滑鼠右鍵，選擇「 `New` 」，再選擇「 `Class` 」，建立新類別。
 
     - #### step 06
-      在彈出的「 `New Java Class` 」視窗裡，輸入 `類別 (class) 名稱`，這裡用「 HelloWorld 」，再勾選「 `public static void main(String[] arg)` 」的核取方格。
+      在彈出的「 `New Java Class` 」視窗裡，輸入 `類別 (class) 名稱`，這裡用「 HelloWorld 」，再勾選「 `public static void main(String[] args)` 」的核取方格。
 
     - #### step 07
       
