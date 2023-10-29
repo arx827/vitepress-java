@@ -80,25 +80,200 @@ title: 21. 例外處理
     ```
 
 ## 多重例外處理流程
+  ```java
+  try {
+    ...
+  }catch (ArithmeticException ex){
+    System.out.println("1");
+  }catch (ArrayIndexOutOfBoundsException ex){
+    System.out.println("2");
+  }catch (Exception ex){
+    System.out.println("3");
+  }finally{
+    System.out.println("4");
+  }
+  System.out.println("5");
+  ```
+
+  如果 `try` 中程式，
+  - 發生 `ArithmeticException`，則印出 1,4,5
+  - 發生 `ArrayIndexOutOfBoundsException`，則印出 2,4,5
+  - 發生上述之外的 `Exception`，則印出 3,4,5
 
 ## RuntimeException
+  - `RuntimeException` 的子類別，也稱 `Unchecked Exception`，`Unchecked` 表示 `Compiler` 不檢查，即便沒有使用 `try catch` 語法抓取可能發生的錯誤，`compile` 時也不會報錯，以下僅列舉常見的一部分。
+
+  | 類別名稱                         | 說明                |
+  |---------------------------------|--------------------|
+  | `ArrayIndexOutOfBoundException` | 存取陣列時超過索引值  |
+  | `IllegalArgumentException`      | 參數傳入錯誤         |
+  | `NullPointException`            | 操作空的物件參數      |
+  | `ArithmeticException`           | 計算 `/0` 錯誤      |
 
 ## Checked Exception
+  `Checked Exception` 表示受編譯器檢查，一定要用程式 `try catch` 處理。
+  
+  ```java
+  import java.io.File;
+  import java.io.FileInputStream;
+
+  public class CheckException {
+    public static void main(String[] args) {
+      FileReader fr = new FileReader("c:\\aaa.txt");
+      // 會丟出 FileNotFoundException 為 Check Exception，一定要處理，
+      // 因為不是 RuntimeException，Eclipse 中可以利用 ctrl + 1 協助
+    }
+  }
+  ```
 
 ## throws
+  如果選擇不在目前方法中處理 `Exception`，也可以利用 `throws` 把 `Exception` 往外拋出，由呼叫者(此例為 `JVM` 負責處理)。
+
+  ```java
+  public class CheckException {
+    public static void main(String[] args) throws FileNotFoundException {
+      FileReader fr = new FileReader("c:\\aaa.txt");
+      System.out.println("Finish");  // 不會被執行
+    }
+  }
+  ```
 
 ## 如果有多個 Exception 可能同時發生，throws 可以同時宣告可能丟出多個 Exception，利用 `,` 區隔
+  ```java
+  public class CheckException {
+    public static void main(String[] args) throws FileNotFoundException, ZipException {
+      FileReader fr = new FileReader("c:\\aaa.txt");
+      System.out.println("Finish");  // 不會被執行
+    }
+  }
+  ```
 
 ## throws 宣告丟出父類別 Exception
+  ```java
+  public class CheckException {
+    public static void main(String[] args) throws FileNotFoundException, IOException {
+      // IOException 為 FileNotFoundException 的父類別
+      FileReader fr = new FileReader("c:\\aaa.txt");
+      System.out.println("Finish");  // 不會被執行
+    }
+  }
+  ```
+
+  此例中 `IOException` 為 `FileNotFoundException`、`ZipException` 的父類別。
+  故 `FileNotFoundException` 可省略。
 
 ## throws
+  方法上必須宣告有可能拋出的 `Exception`。
+  如果拋出的 `Exception` 為 `RuntimeException` 類，則可以不用宣告 `throws`。
+
+  ```java
+  /**
+   * 方法中如果會拋出 Exception，必須用 throws 宣告
+   */
+  public static void checkFile(String filePath) throws FileNotFoundException {
+    ...
+  }
+  ```
 
 ## throw
+  - Java 程式可以『 主動 』在程式邏輯中，透過 `throw` 關鍵字丟出 `Exception`。
+    - 範例：`throw new FileNotFoundException("找不到檔案");`
+
+  ```java
+  // CheckException.java
+
+  public static void checkFile(String filePath) throws FileNotFoundException {
+    File file = new File(filePath);
+    if (!file.exists()) {
+      throw new FileNotFoundException("找不到檔案");
+    }
+  }  
+  ```
+
+  > [註]：`exists()` 為 `File` 上的一個方法，用來檢查檔案是否存在。
 
 ## throws
+  ```java
+  public static void main(String[] args) throws FileNotFoundException{
+    checkFile();    // 如果方法不想處理例外，也可以利用 throws 往外丟
+  }
+
+  public static void checkFile() throws FileNotFoundException {
+    File file = new File("c:\\aaa.txt");
+    if (!file.exists()) {
+      throw new FileNotFoundException("找不到檔案");
+    }
+  }
+  ```
+
+  ```java
+  public static void main(String[] args) throws Exception {
+    try {
+      checkFile(1, 0);            // 方法選擇處理例外，就不需要宣告 throws
+    }catch(FileNotFoundException ex) {
+      ...
+    }
+  }
+
+  public static void checkFile() throws FileNotFoundException {
+    File file = new File("c:\\java.txt");
+    if (!file.exists()) {
+      throw new FileNotFoundException("找不到檔案");
+    }
+  }
+  ```
 
 ## Lab Exception3
+  ```java
+  public static void main(String[] args) {
+    try {
+      calculate();
+      System.out.println(5);
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.out.println(6);
+    }
+    System.out.println(7);
+  }
+
+  public static void calculate() throws Exception {
+    try {
+      System.out.println("1");
+      if (true) {
+        throw new Exception();
+      }
+    } catch (Exception ex) {
+      System.out.println(3);
+      throw ex;
+    }
+    System.out.println(4);
+  }
+  ```
+
+  - 請問列印出的數字為何？
+    `1, 3, 6, 7`
 
 ## 常見 Exception
+  - `FileNotFoundException`，無法取得檔案。
+  - `SQLException`，資料庫操作錯誤。
+  - `NullPointerException`，對空物件操作，導致異常。
+  - `IllegalArgumentException`，導入錯誤參數。
+  - `ArrayIndexOutOfBoundsException`，取用陣列元素超過陣列大小。
+  - `Exception`，當然可以利用 `if else` 加入判斷，避免發生錯誤產生，例如：先判斷取用陣列時，索引值是否超過陣列大小，但過多的判斷會造成程式過於複雜，而不易維護，利用『 `例外處理` 』可以簡化程式。
 
-## NullPointerExeption
+## NullPointerException
+  - `Java` 開發者最常遇見的 `Exception`。
+  - 屬於 `RuntimeException` 的子類別。
+  - 發生情況：物件參考變數，並沒有指定真正的物件，也就是其值為 `null` 時，表示並沒有指向記憶體的任何物件，對其變數操作就會發生此 `Exception`。
+
+    ```java
+    public static void main (String[] args) {
+      Employee employee = null;
+      System.out.println("employee.name = " + employee.name);
+    }
+    ```
+
+    ```java
+    Exception in thread "main" java.lang.NullPointerException
+    at exception.NullException.main(NullException.java:10)
+    ```
