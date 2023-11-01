@@ -15,6 +15,6 @@
   "author": "Eason",
   "devDependencies": {
     "sass": "^1.57.1",
-    "vitepress": "^1.0.0-alpha.38"
+    "vitepress": "1.0.0-alpha.38"
   }
 }

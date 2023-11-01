@@ -98,19 +98,127 @@ title: 22. 集合 Collection
   - 有實作 `Iterable` 的物件，同時還可以利用 `For-each loop` 來訪問所有元素。
 
 ## ArrayList iterator & foreach
+  ```java
+  public static void main(String[] args) {
+    List list = new ArrayList();
+    list.add("Hello");
+    list.add("World");
+    list.add(Double.valueOf(3.0));
+
+    // 利用 iterator 訪問所有元素範例
+    Iterator iterator = list.iterator();
+    while (iterator.hasNext()) {
+      Object item = iterator.next();
+      System.out.println(item);
+    }
+
+    // 利用 foreach loop，會按照順序印出
+    for (Object item: list) {
+      System.out.println(item);
+    }
+  }
+  ```
 
 ## HashSet
+  ```java
+  public static void main(String[] args) {
+    Set set = new HashSet();
+    set.add("Hello");
+    set.add("Hello");     // [注意] 重複的元素
+    set.add("World");
+    set.add("World");     // [注意] 重複的元素
+    set.add(Double.valueOf(3.0));
+
+    System.out.println("個數 = " + set.size());   // 回傳 3
+
+    // contains 可以用來檢查是否存在於 set 中，
+    boolean helloExist = set.contains("Hello");
+
+    // 利用 foreach loop，也可以利用 iterator()
+    for (Object item: set) {
+      System.out.println(item);
+    }
+  }
+  ```
+
+  - 1. `Set` 中不能放重複的元素
+    - 何謂重複：已存在的元素中，有 `equals` 回傳為 `true`，則為重複，在 `add` 時，若會回傳 `false`，表示已經有重複元素，無法加入。
+  - 2. [注意] `Set` 是沒有順序的
+    - 因此 `for loop`，無法保證印出的順序為加入順序。
 
 ## 有順序的 Set SortedSet
+  - 為 `Set` 的子介面，有排序功能的 `Set`
+    - `java.util.LinkedHashSet` 為 `SortedSet` 實作：依新增的順序排列
+      - 與 `ArrayList` 不同之處：
+        - 不能有『 `重複` 』的元素，因為是 `Set` 的一種。
+        - 利用 `contains` 確認物件是否存在時，速度較 `ArrayList` 快。
 
 ## HashMap
+  - `Map` 類，最常用的為 `java.util.HashMap` 實作 `java.util.Map` 介面，利用 `put(key, value)` 方法放入 `key` 跟 `value`，利用 `get(key)` 取得 `value`。
+  - `put(key, value)`，如果原本的 `key` 值已存在，則會覆蓋原有的 `value`。
+
+  ```java
+  public static void main(String[] args) {
+    Map map = new HashMap();
+    map.put("John", 2000);
+    map.put("David", 1000);
+    map.put("Tom", 5000);
+    map.put("Tom", 2500);     // 前一行 Tom: 5000 會被蓋掉
+
+    System.out.println(map.get("Tom"));
+  }
+  ```
 
 ## java.util.HashMap keySet()
+  - 探訪 `Map` 中，所有元素時，以下為第一種方式：
+    - 利用 `keySet()`，回傳所有的 `key` 值為一個 `Set` 集合，因為 `Set` 繼承 `Iterable`，就可以利用 `for each` 或者 `iterator` 來 `loop` 所有的 `key` 值，再利用 `Map` 的 `get` 取得 `value`。
+    - 為什麼 `keySet()` 回傳的集合是 `Set` 而不是 `List`，因為 `key` 值不會重複。
+
+  ```java
+  HashMap map = new HashMap();
+  map.put("John", 2000);
+  map.put("David", 1000);
+  map.put("Tom", 5000);
+
+  // 利用 keySet 來取得所有的 key 值
+  Set keys = map.keySet();
+  for (Object key: keys) {
+    String name = (String) key;
+    System.out.println("name = " + name + ", salary = " + map.get(name));
+  }
+  ```
 
 ## Map.Entry
+  - 尋訪所有 `Map` 中的元素時，還可以利用以下第二種方式
+    - 利用 `entrySet`，取得 `Entry` 物件的 `Set` 集合。
+    - 一個 `Entry` 包含了一組 `key value`。
+
+  ```java
+  // 利用 entrySet 來取得所有的 Entry
+  Set entrySet = map.entrySet();
+  for (Object e: entrySet) {
+    Map.Entry entry = (Map.Entry) e;
+    System.out.println(entry.getKey() + "=" + entry.getValue());
+  }
+  ```
 
 ## Lab
+  - 計算 `John David Tom` 的 薪水總和。
 
 ## Collection
+  |        | 類別            | 特性                       | 支援多執行緒<br>Thread-Safe  | 允許null元素  | 允許重複元素 |
+  |--------|-----------------|--------------------------|:---------------------------:|:-----------:|:-----------:|
+  | `List` | `ArrayList`     | 依加入順序                 |              ✗              |      ✔︎      |      ✔︎      |
+  | `List` | `Vector`        | 依加入順序<br>支援多執行緒   |             ✔︎               |      ✔︎      |      ✔︎      |
+  | `Set`  | `HashSet`       | 無順序                    |              ✗              |      ✔︎      |      ✗      |
+  | `Set`  | `LinkedHashSet` | 依加入順序                 |              ✗              |      ✔︎      |      ✗      |
 
 ## Map
+  | 類別                | 特性                                     | 支援多執行緒<br>Thread-Safe  |
+  |---------------------|-----------------------------------------|:---------------------------:|
+  | `HashMap`           | `key value pair`                        |              ✗              |
+  | `ConcurrentHashMap` | `concurrentHashMap`                     |             ✔︎              |
+  | `LinkedHashMap`     | 在 `keySet`、`entrySet` 時，會按照加入順序 |              ✗              |
+  | `TreeMap`           | 在 `keySet`、`entrySet` 時，會按照加入順序 |              ✗              |
+  | `Hashtable`         | 支援多執行緒 `Thread-Safe`                |             ✔︎               |
+  
